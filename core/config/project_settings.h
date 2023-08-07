@@ -43,7 +43,6 @@ class TypedArray;
 class ProjectSettings : public Object {
 	GDCLASS(ProjectSettings, Object);
 	_THREAD_SAFE_CLASS_
-	friend class TestProjectSettingsInternalsAccessor;
 
 public:
 	typedef HashMap<String, Variant> CustomMap;

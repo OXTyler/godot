@@ -322,9 +322,7 @@ class DisplayServerX11 : public DisplayServer {
 	xrr_get_monitors_t xrr_get_monitors = nullptr;
 	xrr_free_monitors_t xrr_free_monitors = nullptr;
 	void *xrandr_handle = nullptr;
-	bool xrandr_ext_ok = true;
-	bool xinerama_ext_ok = true;
-	bool xshaped_ext_ok = true;
+	Bool xrandr_ext_ok;
 
 	struct Property {
 		unsigned char *data;

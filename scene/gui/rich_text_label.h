@@ -256,7 +256,7 @@ private:
 		ListType list_type = LIST_DOTS;
 		bool capitalize = false;
 		int level = 0;
-		String bullet = U"•";
+		String bullet = String::utf8("•");
 		ItemList() { type = ITEM_LIST; }
 	};
 

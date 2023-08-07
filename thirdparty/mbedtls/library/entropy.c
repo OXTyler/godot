@@ -31,8 +31,6 @@
 #include "mbedtls/entropy_poll.h"
 #include "mbedtls/platform_util.h"
 #include "mbedtls/error.h"
-#include "mbedtls/sha256.h"
-#include "mbedtls/sha512.h"
 
 #include <string.h>
 

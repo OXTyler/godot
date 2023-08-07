@@ -17,8 +17,6 @@
  *  limitations under the License.
  */
 
-#include <string.h>
-
 #include "common.h"
 
 #include "mbedtls/platform.h"
@@ -235,20 +233,17 @@ volatile int mbedtls_timing_alarmed = 0;
 
 unsigned long mbedtls_timing_get_timer(struct mbedtls_timing_hr_time *val, int reset)
 {
-    struct _hr_time t;
+    struct _hr_time *t = (struct _hr_time *) val;
 
     if (reset) {
-        QueryPerformanceCounter(&t.start);
-        memcpy(val, &t, sizeof(struct _hr_time));
+        QueryPerformanceCounter(&t->start);
         return 0;
     } else {
         unsigned long delta;
         LARGE_INTEGER now, hfreq;
-        /* We can't safely cast val because it may not be aligned, so use memcpy */
-        memcpy(&t, val, sizeof(struct _hr_time));
         QueryPerformanceCounter(&now);
         QueryPerformanceFrequency(&hfreq);
-        delta = (unsigned long) ((now.QuadPart - t.start.QuadPart) * 1000ul
+        delta = (unsigned long) ((now.QuadPart - t->start.QuadPart) * 1000ul
                                  / hfreq.QuadPart);
         return delta;
     }
@@ -284,20 +279,17 @@ void mbedtls_set_alarm(int seconds)
 
 unsigned long mbedtls_timing_get_timer(struct mbedtls_timing_hr_time *val, int reset)
 {
-    struct _hr_time t;
+    struct _hr_time *t = (struct _hr_time *) val;
 
     if (reset) {
-        gettimeofday(&t.start, NULL);
-        memcpy(val, &t, sizeof(struct _hr_time));
+        gettimeofday(&t->start, NULL);
         return 0;
     } else {
         unsigned long delta;
         struct timeval now;
-        /* We can't safely cast val because it may not be aligned, so use memcpy */
-        memcpy(&t, val, sizeof(struct _hr_time));
         gettimeofday(&now, NULL);
-        delta = (now.tv_sec  - t.start.tv_sec) * 1000ul
-                + (now.tv_usec - t.start.tv_usec) / 1000;
+        delta = (now.tv_sec  - t->start.tv_sec) * 1000ul
+                + (now.tv_usec - t->start.tv_usec) / 1000;
         return delta;
     }
 }
